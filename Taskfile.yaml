@@ -1,0 +1,40 @@
+version: "3"
+
+includes:
+  backend:
+    taskfile: backend
+    dir: backend
+
+  frontend:
+    taskfile: frontend
+    dir: frontend
+
+tasks:
+  install:
+    desc: "Install backend + frontend dependencies"
+    cmds:
+      - task: backend:install
+      - task: frontend:install
+
+  dev:
+    desc: "Run backend (:8000) and frontend (:5173) together"
+    deps:
+      - task: backend:dev
+      - task: frontend:dev
+
+  build:
+    desc: "Build the frontend"
+    cmds:
+      - task: frontend:build
+
+  lint:
+    desc: "Lint backend + frontend"
+    cmds:
+      - task: backend:lint
+      - task: frontend:lint
+
+  stop:
+    desc: "Stop local dev servers on :8000 and :5173"
+    cmds:
+      - task: backend:stop
+      - task: frontend:stop

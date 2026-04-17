@@ -1,0 +1,27 @@
+version: "3"
+
+tasks:
+  install:
+    desc: "Install JS deps via pnpm"
+    cmds:
+      - pnpm install
+
+  dev:
+    desc: "Run the Vite dev server on :5173"
+    cmds:
+      - pnpm dev --port 5173 {{.CLI_ARGS}}
+
+  build:
+    desc: "Production build"
+    cmds:
+      - pnpm build
+
+  lint:
+    desc: "Run ESLint"
+    cmds:
+      - pnpm lint
+
+  stop:
+    desc: "Stop anything listening on :5173"
+    cmds:
+      - lsof -ti:5173 | xargs kill -9 2>/dev/null || echo "frontend (:5173) already stopped"

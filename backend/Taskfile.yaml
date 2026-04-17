@@ -1,0 +1,33 @@
+version: "3"
+
+tasks:
+  install:
+    desc: "Install Python deps via uv"
+    cmds:
+      - uv sync
+
+  install:model:
+    desc: "Install the heavy ML deps (torch, transformers, whisper)"
+    cmds:
+      - uv sync --group model
+
+  dev:
+    desc: "Run the FastAPI backend with autoreload on :8000"
+    cmds:
+      - uv run uvicorn main:app --reload --port 8000 {{.CLI_ARGS}}
+
+  lint:
+    desc: "Run ruff"
+    cmds:
+      - uv run ruff check .
+      - uv run ruff format --check .
+
+  format:
+    desc: "Apply ruff formatting"
+    cmds:
+      - uv run ruff format .
+
+  stop:
+    desc: "Stop anything listening on :8000"
+    cmds:
+      - lsof -ti:8000 | xargs kill -9 2>/dev/null || echo "backend (:8000) already stopped"
