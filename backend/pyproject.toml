@@ -13,6 +13,10 @@ dependencies = [
 
 [dependency-groups]
 model = [
+    "llama-cpp-python>=0.3.2",
+]
+# Heavier transformers/torch path, reserved for HF Inference Endpoints deploy in Phase 5.
+model-transformers = [
     "torch>=2.5",
     "transformers>=4.46",
     "accelerate>=1.1",
