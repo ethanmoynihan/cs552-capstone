@@ -1,0 +1,27 @@
+version: "3"
+
+# The evaluation harness runs inside the backend's uv environment — it imports
+# llama_service/whisper_service directly. Eval-specific deps (sympy,
+# pylatexenc, etc.) live in the backend's `eval` dependency group.
+
+tasks:
+  install:
+    desc: "Install eval deps into the backend env (sympy, pylatexenc, …)"
+    dir: ../backend
+    cmds:
+      - uv sync --group model --group eval
+
+  accuracy:
+    desc: "Run accuracy eval against real LaTeX generator"
+    cmds:
+      - uv run --project ../backend python evaluate_accuracy.py
+
+  latency:
+    desc: "Run end-to-end latency eval (needs audio_fixtures/ populated)"
+    cmds:
+      - uv run --project ../backend python evaluate_latency.py
+
+  concurrent:
+    desc: "Run concurrent-request load test against :8000 (backend must be up)"
+    cmds:
+      - uv run --project ../backend python evaluate_concurrent.py {{.CLI_ARGS}}

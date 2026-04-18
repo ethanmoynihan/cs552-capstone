@@ -9,12 +9,17 @@ includes:
     taskfile: frontend
     dir: frontend
 
+  eval:
+    taskfile: evaluation
+    dir: evaluation
+
 tasks:
   install:
-    desc: "Install backend + frontend dependencies"
+    desc: "Install backend + frontend + eval dependencies"
     cmds:
       - task: backend:install
       - task: frontend:install
+      - task: eval:install
 
   dev:
     desc: "Run backend (:8000) and frontend (:5173) together"

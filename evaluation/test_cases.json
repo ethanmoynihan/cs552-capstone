@@ -1,0 +1,220 @@
+{
+  "cases": [
+    {
+      "id": "simple-001",
+      "category": "simple",
+      "text": "x squared plus 2x minus 5 equals 0",
+      "expected_latex": "x^{2} + 2x - 5 = 0",
+      "notes": "Classic quadratic, baseline smoke test"
+    },
+    {
+      "id": "simple-002",
+      "category": "simple",
+      "text": "y equals m x plus b",
+      "expected_latex": "y = mx + b",
+      "notes": "Slope-intercept form"
+    },
+    {
+      "id": "simple-003",
+      "category": "simple",
+      "text": "a squared plus b squared equals c squared",
+      "expected_latex": "a^{2} + b^{2} = c^{2}",
+      "notes": "Pythagorean theorem"
+    },
+    {
+      "id": "simple-004",
+      "category": "simple",
+      "text": "E equals m c squared",
+      "expected_latex": "E = mc^{2}",
+      "notes": "Well-known physics identity"
+    },
+    {
+      "id": "simple-005",
+      "category": "simple",
+      "text": "the fraction a over b",
+      "expected_latex": "\\frac{a}{b}",
+      "notes": "Basic fraction"
+    },
+    {
+      "id": "simple-006",
+      "category": "simple",
+      "text": "the square root of x plus 1",
+      "expected_latex": "\\sqrt{x + 1}",
+      "notes": "Scope of sqrt argument — model should pull full phrase"
+    },
+    {
+      "id": "simple-007",
+      "category": "simple",
+      "text": "three x cubed minus two x",
+      "expected_latex": "3x^{3} - 2x",
+      "notes": "Coefficient + cube"
+    },
+    {
+      "id": "simple-008",
+      "category": "simple",
+      "text": "sine of theta plus cosine of theta",
+      "expected_latex": "\\sin(\\theta) + \\cos(\\theta)",
+      "notes": "Greek letter + trig functions"
+    },
+    {
+      "id": "complex-001",
+      "category": "complex",
+      "text": "the integral from 0 to infinity of e to the negative x squared d x",
+      "expected_latex": "\\int_{0}^{\\infty} e^{-x^{2}} \\, dx",
+      "notes": "Gaussian integral — bounds + exponent"
+    },
+    {
+      "id": "complex-002",
+      "category": "complex",
+      "text": "the sum from n equals 1 to infinity of 1 over n squared",
+      "expected_latex": "\\sum_{n=1}^{\\infty} \\frac{1}{n^{2}}",
+      "notes": "Basel problem"
+    },
+    {
+      "id": "complex-003",
+      "category": "complex",
+      "text": "the limit as x approaches 0 of sine x over x",
+      "expected_latex": "\\lim_{x \\to 0} \\frac{\\sin x}{x}",
+      "notes": "Classic limit"
+    },
+    {
+      "id": "complex-004",
+      "category": "complex",
+      "text": "the derivative of x squared with respect to x",
+      "expected_latex": "\\frac{d}{dx} x^{2}",
+      "notes": "Leibniz notation"
+    },
+    {
+      "id": "complex-005",
+      "category": "complex",
+      "text": "quadratic formula: x equals negative b plus or minus the square root of b squared minus 4 a c all over 2 a",
+      "expected_latex": "x = \\frac{-b \\pm \\sqrt{b^{2} - 4ac}}{2a}",
+      "notes": "Deep nesting: fraction with sqrt inside"
+    },
+    {
+      "id": "complex-006",
+      "category": "complex",
+      "text": "f of x equals the sum from k equals 0 to n of a sub k times x to the k",
+      "expected_latex": "f(x) = \\sum_{k=0}^{n} a_{k} x^{k}",
+      "notes": "Polynomial via summation"
+    },
+    {
+      "id": "complex-007",
+      "category": "complex",
+      "text": "the partial derivative of f with respect to x",
+      "expected_latex": "\\frac{\\partial f}{\\partial x}",
+      "notes": "Partial notation"
+    },
+    {
+      "id": "complex-008",
+      "category": "complex",
+      "text": "the matrix with rows 1 2 and 3 4",
+      "expected_latex": "\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}",
+      "notes": "Matrix structure — stresses LaTeX environments"
+    },
+    {
+      "id": "complex-009",
+      "category": "complex",
+      "text": "the norm of x squared",
+      "expected_latex": "\\|x\\|^{2}",
+      "notes": "Norm notation"
+    },
+    {
+      "id": "complex-010",
+      "category": "complex",
+      "text": "the binomial coefficient n choose k",
+      "expected_latex": "\\binom{n}{k}",
+      "notes": "Binomial — no implicit operator"
+    },
+    {
+      "id": "ambiguous-001",
+      "category": "ambiguous",
+      "text": "x cubed over two plus ten",
+      "expected_latex": "\\frac{x^{3}}{2} + 10",
+      "notes": "Proposal §ExpectedChallenges: could also parse as x^{3}/(2+10). Reference = most common math reading."
+    },
+    {
+      "id": "ambiguous-002",
+      "category": "ambiguous",
+      "text": "a plus b over c",
+      "expected_latex": "a + \\frac{b}{c}",
+      "notes": "Classic scope ambiguity — could be (a+b)/c. Standard precedence wins."
+    },
+    {
+      "id": "ambiguous-003",
+      "category": "ambiguous",
+      "text": "x squared y",
+      "expected_latex": "x^{2} y",
+      "notes": "Is the y in the exponent? Reference: no, juxtaposition."
+    },
+    {
+      "id": "ambiguous-004",
+      "category": "ambiguous",
+      "text": "sine squared x",
+      "expected_latex": "\\sin^{2}(x)",
+      "notes": "Convention: exponent on function, applied to x"
+    },
+    {
+      "id": "ambiguous-005",
+      "category": "ambiguous",
+      "text": "one half x plus y",
+      "expected_latex": "\\frac{1}{2} x + y",
+      "notes": "Is it (1/2)(x+y) or (1/2)x + y? Precedence says the latter."
+    },
+    {
+      "id": "ambiguous-006",
+      "category": "ambiguous",
+      "text": "log base 2 of x plus 1",
+      "expected_latex": "\\log_{2}(x) + 1",
+      "notes": "Scope: is the +1 inside the log? Convention says no."
+    },
+    {
+      "id": "edit-001",
+      "category": "edit",
+      "text": "replace the minus 5 with plus 7",
+      "current_latex": "x^{2} + 2x - 5 = 0",
+      "expected_latex": "x^{2} + 2x + 7 = 0",
+      "notes": "Direct substitution"
+    },
+    {
+      "id": "edit-002",
+      "category": "edit",
+      "text": "change 2x to 3x",
+      "current_latex": "x^{2} + 2x - 5 = 0",
+      "expected_latex": "x^{2} + 3x - 5 = 0",
+      "notes": "Coefficient swap"
+    },
+    {
+      "id": "edit-003",
+      "category": "edit",
+      "text": "square the whole right side",
+      "current_latex": "y = m x + b",
+      "expected_latex": "y = (mx + b)^{2}",
+      "notes": "Structural edit — requires understanding grouping"
+    },
+    {
+      "id": "edit-004",
+      "category": "edit",
+      "text": "divide both sides by 2",
+      "current_latex": "2x + 4 = 10",
+      "expected_latex": "x + 2 = 5",
+      "notes": "Semantic edit — model must do arithmetic"
+    },
+    {
+      "id": "edit-005",
+      "category": "edit",
+      "text": "add a constant c to the right side",
+      "current_latex": "f(x) = x^{2}",
+      "expected_latex": "f(x) = x^{2} + c",
+      "notes": "Append term"
+    },
+    {
+      "id": "edit-006",
+      "category": "edit",
+      "text": "wrap the x squared in a square root",
+      "current_latex": "y = x^{2} + 1",
+      "expected_latex": "y = \\sqrt{x^{2}} + 1",
+      "notes": "Structural wrap — tests LaTeX-aware editing"
+    }
+  ]
+}
