@@ -2,14 +2,14 @@ version: "3"
 
 tasks:
   install:
-    desc: "Install Python deps via uv"
-    cmds:
-      - uv sync
-
-  install:model:
-    desc: "Install the heavy ML deps (torch, transformers, whisper)"
+    desc: "Install Python deps (incl. llama-cpp-python + openai-whisper)"
     cmds:
       - uv sync --group model
+
+  install:transformers:
+    desc: "Also install the torch/transformers path used for the Phase 5 HF deploy"
+    cmds:
+      - uv sync --group model --group model-transformers
 
   dev:
     desc: "Run the FastAPI backend with autoreload on :8000"

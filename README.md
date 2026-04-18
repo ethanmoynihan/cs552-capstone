@@ -8,7 +8,7 @@ The initial proposal is written in the PROPOSAL.md file and is the same as the o
 
 The SDD.md is a software design doc for this project. I have found these very useful at work tracking what needs to be done and properly scoping projects. This goes into the specifics of what needs to be done and how it's getting done with actual technical details.
 
-## Phase 1: Running Locally
+## Running Locally
 
 The current scaffold wires the text-in → LaTeX-out pipeline with a stubbed LLM so the frontend can be built end-to-end before the 8B model is loaded.
 

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { MathJaxContext } from 'better-react-mathjax'
 import { generateLatex } from './services/api'
 import { EquationDisplay } from './components/EquationDisplay'
+import { VoiceInput } from './components/VoiceInput'
+import { TranscriptPane } from './components/TranscriptPane'
 import './App.css'
 
 const mathJaxConfig = {
@@ -10,17 +12,16 @@ const mathJaxConfig = {
 }
 
 function App() {
-  const [text, setText] = useState('')
+  const [transcript, setTranscript] = useState('')
   const [latex, setLatex] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+  async function handleSubmit() {
     setLoading(true)
     setError(null)
     try {
-      const res = await generateLatex(text)
+      const res = await generateLatex(transcript)
       setLatex(res.latex)
     } catch (err) {
       setError(err.message)
@@ -33,20 +34,16 @@ function App() {
     <MathJaxContext version={3} config={mathJaxConfig}>
       <div className="app">
         <header>
-          <h1>Voice-Driven LaTeX (Phase 1)</h1>
-          <p>Text input &rarr; LLM (stub) &rarr; rendered equation.</p>
+          <h1>Voice-Driven LaTeX (Phase 2)</h1>
+          <p>Speak or type an equation &rarr; LLM &rarr; rendered equation.</p>
         </header>
-        <form onSubmit={handleSubmit}>
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="e.g. x squared plus 2x minus 5 equals 0"
-            rows={3}
-          />
-          <button type="submit" disabled={loading || !text.trim()}>
-            {loading ? 'Generating\u2026' : 'Generate LaTeX'}
-          </button>
-        </form>
+        <VoiceInput onTranscript={setTranscript} disabled={loading} />
+        <TranscriptPane
+          value={transcript}
+          onChange={setTranscript}
+          onSubmit={handleSubmit}
+          loading={loading}
+        />
         {error && <div className="error">{error}</div>}
         <EquationDisplay latex={latex} />
       </div>

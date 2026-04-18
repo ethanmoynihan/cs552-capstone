@@ -190,10 +190,10 @@ dev = [
 ]
 model = [
     { name = "llama-cpp-python" },
+    { name = "openai-whisper" },
 ]
 model-transformers = [
     { name = "accelerate" },
-    { name = "openai-whisper" },
     { name = "torch" },
     { name = "transformers" },
 ]
@@ -213,10 +213,12 @@ dev = [
     { name = "pytest", specifier = ">=8.3" },
     { name = "ruff", specifier = ">=0.7" },
 ]
-model = [{ name = "llama-cpp-python", specifier = ">=0.3.2" }]
+model = [
+    { name = "llama-cpp-python", specifier = ">=0.3.2" },
+    { name = "openai-whisper", specifier = ">=20240930" },
+]
 model-transformers = [
     { name = "accelerate", specifier = ">=1.1" },
-    { name = "openai-whisper", specifier = ">=20240930" },
     { name = "torch", specifier = ">=2.5" },
     { name = "transformers", specifier = ">=4.46" },
 ]

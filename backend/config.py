@@ -20,7 +20,12 @@ class Settings(BaseSettings):
 
     # Legacy/transformers name (used in Phase 5 deploy path).
     llama_model: str = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+
+    # Whisper (ASR) settings. Flip to false once openai-whisper is installed.
+    use_stub_whisper: bool = True
     whisper_model: str = "small"
+    whisper_device: str = "cpu"  # "cuda" on GPU host, "cpu" elsewhere; Whisper picks fp16 automatically
+    whisper_language: str | None = "en"  # None = auto-detect
 
     cors_origins: list[str] = ["http://localhost:5173"]
 
