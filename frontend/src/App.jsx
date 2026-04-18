@@ -4,6 +4,7 @@ import { generateLatex } from './services/api'
 import { EquationDisplay } from './components/EquationDisplay'
 import { VoiceInput } from './components/VoiceInput'
 import { TranscriptPane } from './components/TranscriptPane'
+import { EditCommand } from './components/EditCommand'
 import './App.css'
 
 const mathJaxConfig = {
@@ -34,8 +35,8 @@ function App() {
     <MathJaxContext version={3} config={mathJaxConfig}>
       <div className="app">
         <header>
-          <h1>Voice-Driven LaTeX (Phase 2)</h1>
-          <p>Speak or type an equation &rarr; LLM &rarr; rendered equation.</p>
+          <h1>Voice-Driven LaTeX (Phase 3)</h1>
+          <p>Speak or type an equation &rarr; edit with follow-up commands.</p>
         </header>
         <VoiceInput onTranscript={setTranscript} disabled={loading} />
         <TranscriptPane
@@ -46,6 +47,7 @@ function App() {
         />
         {error && <div className="error">{error}</div>}
         <EquationDisplay latex={latex} />
+        {latex && <EditCommand currentLatex={latex} onEdit={setLatex} />}
       </div>
     </MathJaxContext>
   )

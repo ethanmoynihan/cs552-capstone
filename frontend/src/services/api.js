@@ -12,6 +12,18 @@ export async function generateLatex(text) {
   return res.json()
 }
 
+export async function editEquation(currentLatex, editCommand) {
+  const res = await fetch(`${API_BASE}/edit-equation`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ current_latex: currentLatex, edit_command: editCommand }),
+  })
+  if (!res.ok) {
+    throw new Error(`edit-equation failed: ${res.status}`)
+  }
+  return res.json()
+}
+
 export async function transcribeAudio(blob) {
   const form = new FormData()
   const filename = blob.type.includes('webm') ? 'audio.webm' : 'audio.bin'
