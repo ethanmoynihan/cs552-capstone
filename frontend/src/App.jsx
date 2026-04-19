@@ -36,7 +36,7 @@ function App() {
     <MathJaxContext version={3} config={mathJaxConfig}>
       <div className="app">
         <header>
-          <h1>Voice-Driven LaTeX (Phase 3)</h1>
+          <h1>Voice-Driven Mathematical LaTeX</h1>
           <p>Speak or type an equation &rarr; edit with follow-up commands.</p>
         </header>
         <VoiceInput onTranscript={setTranscript} disabled={loading} />

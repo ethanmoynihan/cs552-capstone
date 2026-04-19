@@ -25,3 +25,13 @@ tasks:
     desc: "Run concurrent-request load test against :8000 (backend must be up)"
     cmds:
       - uv run --project .. python evaluate_concurrent.py {{.CLI_ARGS}}
+
+  remote-accuracy:
+    desc: "Accuracy eval against a deployed backend — pass --base-url=<space URL>"
+    cmds:
+      - uv run --project .. python run_remote_accuracy.py {{.CLI_ARGS}}
+
+  figures:
+    desc: "Render writeup PNGs from the newest results/accuracy-*.json"
+    cmds:
+      - uv run --project .. python render_figures.py {{.CLI_ARGS}}
