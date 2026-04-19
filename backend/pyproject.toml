@@ -15,6 +15,7 @@ dependencies = [
 model = [
     "llama-cpp-python>=0.3.2",
     "openai-whisper>=20240930",
+    "huggingface-hub>=0.26",
 ]
 # Heavier transformers/torch path, reserved for HF Inference Endpoints deploy in Phase 5.
 model-transformers = [

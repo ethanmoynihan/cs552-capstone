@@ -205,6 +205,7 @@ eval = [
     { name = "sympy" },
 ]
 model = [
+    { name = "huggingface-hub" },
     { name = "llama-cpp-python" },
     { name = "openai-whisper" },
 ]
@@ -237,6 +238,7 @@ eval = [
     { name = "sympy", specifier = ">=1.13" },
 ]
 model = [
+    { name = "huggingface-hub", specifier = ">=0.26" },
     { name = "llama-cpp-python", specifier = ">=0.3.2" },
     { name = "openai-whisper", specifier = ">=20240930" },
 ]

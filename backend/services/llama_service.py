@@ -71,20 +71,15 @@ class LlamaCppLatexGenerator:
     """Real inference via llama-cpp-python against a local GGUF."""
 
     def __init__(self) -> None:
-        """Load the GGUF weights onto Metal and read in the system prompts."""
+        """Load the GGUF weights (downloading from HF Hub if needed) and read prompts."""
 
-
-        if not settings.llama_gguf_path.exists():
-            raise FileNotFoundError(
-                f"GGUF weights not found at {settings.llama_gguf_path}. "
-                "Download the model or adjust LLAMA_GGUF_PATH."
-            )
+        gguf_path = _ensure_gguf(settings.llama_gguf_path)
 
         self._system_generate = (PROMPTS_DIR / "generate.txt").read_text().strip()
         self._system_edit = (PROMPTS_DIR / "edit.txt").read_text().strip()
 
         self._llm = Llama(
-            model_path=str(settings.llama_gguf_path),
+            model_path=str(gguf_path),
             n_ctx=settings.llama_n_ctx,
             n_gpu_layers=settings.llama_n_gpu_layers,
             verbose=False,
@@ -131,6 +126,31 @@ class LlamaCppLatexGenerator:
         raw = resp["choices"][0]["message"]["content"]
         tokens_used = int(resp.get("usage", {}).get("completion_tokens", 0))
         return _clean_latex(raw), tokens_used, elapsed_ms
+
+
+def _ensure_gguf(local_path: Path) -> Path:
+    """
+    Resolve the GGUF path, downloading from the HF Hub if the local file is missing.
+
+    Local dev: weights are at backend/models/...gguf and we use them directly.
+    HF Space (first boot): download to ~/.cache/huggingface — Spaces persist the
+    cache across restarts, so subsequent boots reuse the downloaded file.
+    """
+    if local_path.exists():
+        return local_path
+
+    from huggingface_hub import hf_hub_download
+
+    print(
+        f"[llama] {local_path} missing; downloading "
+        f"{settings.hf_model_file} from {settings.hf_model_repo}..."
+    )
+    downloaded = hf_hub_download(
+        repo_id=settings.hf_model_repo,
+        filename=settings.hf_model_file,
+    )
+    print(f"[llama] downloaded to {downloaded}")
+    return Path(downloaded)
 
 
 def _clean_latex(raw: str) -> str:

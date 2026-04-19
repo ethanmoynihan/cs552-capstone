@@ -1,4 +1,6 @@
-const API_BASE = '/api'
+// Dev: '/api' — Vite proxies to http://localhost:8000.
+// Prod: set VITE_API_BASE_URL to the deployed Space URL (e.g. https://<user>-<space>.hf.space).
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? '/api'
 
 export async function generateLatex(text) {
   const res = await fetch(`${API_BASE}/generate-latex`, {
