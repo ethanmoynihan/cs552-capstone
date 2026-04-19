@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import settings
-from routers import generate, transcribe
+from routers import evaluation, generate, transcribe
 from services.llama_service import warm_generator
 from services.whisper_service import warm_transcriber
 
@@ -28,6 +28,7 @@ app.add_middleware(
 
 app.include_router(generate.router)
 app.include_router(transcribe.router)
+app.include_router(evaluation.router)
 
 
 @app.get("/health")

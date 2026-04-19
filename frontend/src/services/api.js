@@ -26,6 +26,26 @@ export async function editEquation(currentLatex, editCommand) {
   return res.json()
 }
 
+export async function listTestCases() {
+  const res = await fetch(`${API_BASE}/evaluation/test-cases`)
+  if (!res.ok) {
+    throw new Error(`test-cases failed: ${res.status}`)
+  }
+  return res.json()
+}
+
+export async function runTestCase(id) {
+  const res = await fetch(`${API_BASE}/evaluation/run-case`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id }),
+  })
+  if (!res.ok) {
+    throw new Error(`run-case failed for ${id}: ${res.status}`)
+  }
+  return res.json()
+}
+
 export async function transcribeAudio(blob) {
   const form = new FormData()
   const filename = blob.type.includes('webm') ? 'audio.webm' : 'audio.bin'

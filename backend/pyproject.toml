@@ -35,6 +35,8 @@ eval = [
     "pylatexenc>=2.10",
     "python-Levenshtein>=0.25",
     "httpx>=0.27",
+    "sacrebleu>=2.4",
+    "rouge-score>=0.1.2",
 ]
 
 [tool.ruff]

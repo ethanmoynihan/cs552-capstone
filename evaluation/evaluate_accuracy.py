@@ -79,6 +79,8 @@ def _summarize(results: list[dict]) -> dict:
         math_eq_true = sum(1 for r in items if r["metrics"]["math_equivalent"] is True)
         math_eq_checked = sum(1 for r in items if r["metrics"]["math_equivalent"] is not None)
         neds = [r["metrics"]["normalized_edit_distance"] for r in items]
+        bleus = [r["metrics"]["bleu"] for r in items]
+        rouges = [r["metrics"]["rouge_l"] for r in items]
         inf_ms = [r["inference_ms"] for r in items]
         return {
             "n": n,
@@ -87,6 +89,8 @@ def _summarize(results: list[dict]) -> dict:
             "math_equivalent_rate": (math_eq_true / math_eq_checked) if math_eq_checked else None,
             "math_equivalent_checked": math_eq_checked,
             "mean_normalized_edit_distance": statistics.mean(neds) if neds else 0.0,
+            "mean_bleu": statistics.mean(bleus) if bleus else 0.0,
+            "mean_rouge_l": statistics.mean(rouges) if rouges else 0.0,
             "median_inference_ms": statistics.median(inf_ms) if inf_ms else 0,
         }
 
@@ -145,6 +149,8 @@ def _stats_table(s: dict) -> str:
         f"| exact match | {s['exact_match_rate']:.1%} |\n"
         f"| math equivalent | {math_str} |\n"
         f"| parses ok | {s['parses_ok_rate']:.1%} |\n"
+        f"| mean BLEU | {s['mean_bleu']:.1f} |\n"
+        f"| mean ROUGE-L | {s['mean_rouge_l']:.2f} |\n"
         f"| mean normalized edit distance | {s['mean_normalized_edit_distance']:.2f} |\n"
         f"| median inference ms | {s['median_inference_ms']} |"
     )

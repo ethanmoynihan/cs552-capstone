@@ -5,6 +5,7 @@ import { EquationDisplay } from './components/EquationDisplay'
 import { VoiceInput } from './components/VoiceInput'
 import { TranscriptPane } from './components/TranscriptPane'
 import { EditCommand } from './components/EditCommand'
+import { EvaluationPanel } from './components/EvaluationPanel'
 import './App.css'
 
 const mathJaxConfig = {
@@ -48,6 +49,7 @@ function App() {
         {error && <div className="error">{error}</div>}
         <EquationDisplay latex={latex} />
         {latex && <EditCommand currentLatex={latex} onEdit={setLatex} />}
+        <EvaluationPanel />
       </div>
     </MathJaxContext>
   )

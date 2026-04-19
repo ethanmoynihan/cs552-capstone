@@ -28,6 +28,8 @@ class MetricResult:
     normalized_edit_distance: float  # 0.0 perfect, 1.0 totally different
     parses_ok: bool
     math_equivalent: bool | None  # None = could not check
+    bleu: float  # 0.0 - 100.0 (sacrebleu scale)
+    rouge_l: float  # 0.0 - 1.0
 
 
 def _normalize(latex: str) -> str:
@@ -108,6 +110,29 @@ def math_equivalent(candidate: str, reference: str) -> bool | None:
         return None
 
 
+def bleu(candidate: str, reference: str) -> float:
+    """
+    BLEU-4 via sacrebleu. Returns the familiar 0-100 score (not 0-1). LaTeX
+    symbols (\\sum, \\int, ^, _) tokenize naturally at whitespace + punctuation,
+    so sacrebleu's default `intl` tokenizer is fine here.
+    """
+    from sacrebleu.metrics import BLEU
+
+    scorer = BLEU(effective_order=True)
+    return scorer.sentence_score(candidate, [reference]).score
+
+
+def rouge_l(candidate: str, reference: str) -> float:
+    """
+    ROUGE-L F-measure. Less meaningful than math equivalence for our task,
+    but cheap to include and the rubric asks for it.
+    """
+    from rouge_score import rouge_scorer
+
+    scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=False)
+    return scorer.score(reference, candidate)["rougeL"].fmeasure
+
+
 def _strip_equation_wrappers(s: str) -> str:
     """sympy's parser doesn't like \\, \\begin{...}, or bare \\left\\|."""
     s = s.strip()
@@ -123,4 +148,6 @@ def evaluate(candidate: str, reference: str) -> MetricResult:
         normalized_edit_distance=normalized_edit_distance(candidate, reference),
         parses_ok=parses_ok(candidate),
         math_equivalent=math_equivalent(candidate, reference),
+        bleu=bleu(candidate, reference),
+        rouge_l=rouge_l(candidate, reference),
     )

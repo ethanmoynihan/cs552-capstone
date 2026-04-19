@@ -135,3 +135,103 @@ button:disabled {
   align-self: stretch;
   white-space: nowrap;
 }
+
+.evaluation-panel {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid #ddd;
+}
+
+.evaluation-toggle {
+  align-self: stretch;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.evaluation-body {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.evaluation-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.evaluation-progress {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.summary-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.tile {
+  padding: 0.5rem 0.75rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.tile-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.tile-label {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.results-table-wrapper {
+  overflow-x: auto;
+  max-height: 420px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.results-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+.results-table th,
+.results-table td {
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.results-table th {
+  background: #fafafa;
+  position: sticky;
+  top: 0;
+}
+
+.results-table tr.pending td {
+  opacity: 0.5;
+}
+
+.results-table code {
+  font-size: 0.8rem;
+}
+
+.pass { color: #0a0; font-weight: 600; }
+.fail { color: #b00; font-weight: 600; }
+.unchecked { color: #999; }
