@@ -9,15 +9,25 @@ dependencies = [
     "pydantic>=2.9",
     "pydantic-settings>=2.6",
     "python-multipart>=0.0.12",
+    # Evaluation metrics are imported by routers/evaluation.py — no longer optional.
+    "sympy>=1.13",
+    "antlr4-python3-runtime==4.11",
+    "pylatexenc>=2.10",
+    "python-Levenshtein>=0.25",
+    "sacrebleu>=2.4",
+    "rouge-score>=0.1.2",
 ]
 
 [dependency-groups]
+# Heavy inference stack. Install for local/deployed real inference; skip in
+# CI-only environments that just need to exercise routing/metrics code.
 model = [
     "llama-cpp-python>=0.3.2",
     "openai-whisper>=20240930",
     "huggingface-hub>=0.26",
 ]
-# Heavier transformers/torch path, reserved for HF Inference Endpoints deploy in Phase 5.
+# Transformers/torch path — not used by the current Space deploy. Kept in case
+# we ever need the HF Inference Endpoints schema.
 model-transformers = [
     "torch>=2.5",
     "transformers>=4.46",
@@ -27,16 +37,6 @@ dev = [
     "ruff>=0.7",
     "pytest>=8.3",
     "httpx>=0.27",
-]
-# Phase 4 evaluation harness in ./evaluation
-eval = [
-    "sympy>=1.13",
-    "antlr4-python3-runtime==4.11",
-    "pylatexenc>=2.10",
-    "python-Levenshtein>=0.25",
-    "httpx>=0.27",
-    "sacrebleu>=2.4",
-    "rouge-score>=0.1.2",
 ]
 
 [tool.ruff]

@@ -29,7 +29,9 @@ RUN pip install --no-cache-dir --user uv
 # We strip it from the model group by copying only the files uv needs.
 COPY --chown=user:user pyproject.toml uv.lock ./
 
-# Install deps without the model group first (the base app).
+# Base deps (eval metrics now ship as part of runtime dependencies). The `model`
+# group is installed manually below with prebuilt CUDA wheels to avoid the 10GB+
+# source compile of llama-cpp-python.
 RUN uv sync --frozen --no-dev
 
 # Now install model deps manually, using the prebuilt CUDA wheel for llama-cpp.
