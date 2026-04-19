@@ -21,11 +21,11 @@ from pathlib import Path
 
 EVAL_DIR = Path(__file__).resolve().parent
 # Make the backend importable as a top-level package (matches how it runs under uvicorn).
-sys.path.insert(0, str(EVAL_DIR.parent / "backend"))
+sys.path.insert(0, str(EVAL_DIR.parent))
 
 from services.llama_service import get_generator  # noqa: E402
 
-from metrics import evaluate  # noqa: E402
+from evaluation.metrics import evaluate  # noqa: E402
 
 
 def run() -> None:

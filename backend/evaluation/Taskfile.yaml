@@ -7,21 +7,21 @@ version: "3"
 tasks:
   install:
     desc: "Install eval deps into the backend env (sympy, pylatexenc, …)"
-    dir: ../backend
+    dir: ..
     cmds:
       - uv sync --group model --group eval
 
   accuracy:
     desc: "Run accuracy eval against real LaTeX generator"
     cmds:
-      - uv run --project ../backend python evaluate_accuracy.py
+      - uv run --project .. python evaluate_accuracy.py
 
   latency:
     desc: "Run end-to-end latency eval (needs audio_fixtures/ populated)"
     cmds:
-      - uv run --project ../backend python evaluate_latency.py
+      - uv run --project .. python evaluate_latency.py
 
   concurrent:
     desc: "Run concurrent-request load test against :8000 (backend must be up)"
     cmds:
-      - uv run --project ../backend python evaluate_concurrent.py {{.CLI_ARGS}}
+      - uv run --project .. python evaluate_concurrent.py {{.CLI_ARGS}}

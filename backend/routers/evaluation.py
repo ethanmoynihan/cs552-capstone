@@ -2,16 +2,13 @@
 Evaluation router — exposes the Phase 4 test suite over HTTP so the frontend
 can run it interactively.
 
-The metrics implementation lives in ../evaluation/metrics.py. We import it
-lazily on first request so the backend still boots when the eval harness
-dependencies (sacrebleu, rouge-score, sympy) aren't installed — e.g., on
-a slimmed-down production build.
+The metrics implementation and test cases live in backend/evaluation as a
+proper Python subpackage, so they ship with the backend into the HF Space.
 """
 
 from __future__ import annotations
 
 import json
-import sys
 import time
 from dataclasses import asdict
 from pathlib import Path
@@ -20,28 +17,12 @@ from typing import Any
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
+from evaluation.metrics import evaluate
 from services.llama_service import get_generator
 
 router = APIRouter(prefix="/evaluation")
 
-REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-TEST_CASES_PATH = REPO_ROOT / "evaluation" / "test_cases.json"
-METRICS_DIR = REPO_ROOT / "evaluation"
-
-
-_evaluate_fn = None
-
-
-def _get_evaluate():
-    """Lazily import metrics.evaluate so a missing eval dep doesn't break /health."""
-    global _evaluate_fn
-    if _evaluate_fn is None:
-        if str(METRICS_DIR) not in sys.path:
-            sys.path.insert(0, str(METRICS_DIR))
-        from metrics import evaluate  # noqa: WPS433
-
-        _evaluate_fn = evaluate
-    return _evaluate_fn
+TEST_CASES_PATH = Path(__file__).resolve().parent.parent / "evaluation" / "test_cases.json"
 
 
 def _load_cases() -> list[dict[str, Any]]:
@@ -84,9 +65,8 @@ def run_case(req: RunCaseRequest) -> RunCaseResponse:
         latex, tokens, inference_ms = generator.edit(case["current_latex"], case["text"])
     else:
         latex, tokens, inference_ms = generator.generate(case["text"])
-    # wall time isn't reported separately — inference_ms covers the interesting work
+    _ = start  # wall time not exposed; inference_ms is the interesting number
 
-    evaluate = _get_evaluate()
     metrics = asdict(evaluate(latex, case["expected_latex"]))
 
     return RunCaseResponse(

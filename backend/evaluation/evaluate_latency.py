@@ -27,7 +27,7 @@ import time
 from pathlib import Path
 
 EVAL_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(EVAL_DIR.parent / "backend"))
+sys.path.insert(0, str(EVAL_DIR.parent))
 
 from services.llama_service import get_generator  # noqa: E402
 from services.whisper_service import get_transcriber  # noqa: E402
